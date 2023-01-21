@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helpboard Legacy | Settings</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <style>
     html, body {
         height: 100%;
@@ -28,10 +29,15 @@
            <h1 style="text-align: center">Settings</h1>
            <p style="text-align: center">Build L1.0.1</p>
            <div class="grid">
-              <button style="text-align: center">Import Keyfile</button>
-              <button style="text-align: center">Export Keyfile</button>
+              <button style="text-align: center" id="importKeyfile">Import Keyfile</button>
+              <button style="text-align: center" id="exportKeyfile">Export Keyfile</button>
            </div>
         </hgroup>
      </header>
+     <script>
+        $( "#importKeyfile" ).click(function() {
+            alert( "Handler for .click() called." );
+        });
+     </script>
 </body>
 </html>
