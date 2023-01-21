@@ -29,14 +29,30 @@
            <h1 style="text-align: center">Settings</h1>
            <p style="text-align: center">Build L1.0.1</p>
            <div class="grid">
-              <button style="text-align: center" id="importKeyfile">Import Keyfile</button>
+              <label for="importKeyfile" role="button" style="text-align: center; width: 100%;">Import Keyfile</label>
               <button style="text-align: center" id="exportKeyfile">Export Keyfile</button>
+              <button style="text-align: center" id="resetKeys">Reset Keys</button>
+
+              <input type="file" id="importKeyfile" style="visibility:hidden;">
            </div>
         </hgroup>
      </header>
      <script>
-        $( "#importKeyfile" ).click(function() {
-            alert( "Handler for .click() called." );
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        $( "#exportKeyfile" ).click(function() {
+            download('HBL_KEYFILE', localStorage.getItem('HBL_KEYS'));
         });
      </script>
 </body>
