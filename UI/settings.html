@@ -7,6 +7,8 @@
     <title>Helpboard Legacy | Settings</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://unpkg.com/openpgp@latest/dist/openpgp.min.js"></script>
+    <script type="module" src="netcode.js"></script>
     <style>
     html, body {
         height: 100%;
@@ -53,6 +55,10 @@
 
         $( "#exportKeyfile" ).click(function() {
             download('HBL_KEYFILE', localStorage.getItem('HBL_KEYS'));
+        });
+
+        $( "#resetKeys" ).click(function() {
+            
         });
      </script>
 </body>
