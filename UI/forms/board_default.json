@@ -1,0 +1,38 @@
+{
+    "schema": {
+      "fname": {
+        "type": "string",
+        "title": "First Name"
+      },
+      "lname": {
+        "type": "string",
+        "title": "Last Name"
+      },
+      "id": {
+        "type": "number",
+        "title": "Your Helpboard ID"
+      },
+      "yq": {
+        "type": "string",
+        "title": "Your Question"
+      }
+    },
+    "form": [
+      {
+        "key": "fname"
+      },
+      {
+        "key": "lname"
+      },
+      {
+        "key": "yq"
+      },
+      {
+        "key": "id"
+      },
+      {
+        "type": "submit",
+        "title": "Connect"
+      }
+    ]
+  }
