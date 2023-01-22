@@ -62,7 +62,7 @@ const hbnet = {
         this.name = name
         this.debug = debug
         this.send = function(){
-            // Connect from the HBL Network
+            // Connect to the HBL Network
             try {
                 this.room = joinRoom(baseConfig, this.boardID.toString())
             } catch {
