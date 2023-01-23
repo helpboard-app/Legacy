@@ -68,15 +68,14 @@
                 boardIDs.push(row.doc.boardID);
                 $("#board_container").append(`<li><a href="#">${row.doc.boardID}</a></li>`);
             });
+            if (!Array.isArray(boardIDs) || !boardIDs.length) {
+                // array does not exist, is not an array, or is empty
+                alert("You have no Helpboards.")
+            }
             console.log(boardIDs); // Array of all board IDs
         }).catch(function(err) {
             console.log(err);
         });
-
-        if (!Array.isArray(boardIDs) || !boardIDs.length) {
-            // array does not exist, is not an array, or is empty
-            $("#board_container").append(`<li>You have no Helpboards.</li>`);
-        }
     </script>
 </body>
 </html>
