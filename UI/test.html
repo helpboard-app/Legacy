@@ -3,35 +3,31 @@
   <head>
     <title>Google OAuth 2.0 Test</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
   </head>
   <body>
     <a href="#" id="signinButton">Sign In</a>
     <script>
-      var auth2; // The Sign-In object.
-      var authData; // User's ID token and basic profile information.
-      var appStart = function() {
-        gapi.load('auth2', function() {
-          gapi.auth2.init({
-            client_id: '689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com',
-            scope: 'https://www.googleapis.com/auth/plus.login'
-          }).then(function(auth) {
-            auth2 = auth;
-            if (auth2.isSignedIn.get()) {
-              authData = auth2.currentUser.get().getAuthResponse();
-              console.log("Name: " + auth2.currentUser.get().getBasicProfile().getName());
-              console.log("Email: " + auth2.currentUser.get().getBasicProfile().getEmail());
-            }
-            document.getElementById('signinButton').onclick = function() {
-              auth2.signIn().then(function(response) {
-                authData = response.getAuthResponse();
-                console.log("Name: " + response.getBasicProfile().getName());
-                console.log("Email: " + response.getBasicProfile().getEmail());
-              });
-            }
-          });
+      gapi.load('client:auth2', function() {
+        gapi.client.init({
+          clientId: '689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com',
+          scope: 'https://www.googleapis.com/auth/plus.login'
+        }).then(function() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          if (auth2.isSignedIn.get()) {
+            var profile = auth2.currentUser.get().getBasicProfile();
+            console.log("Name: " + profile.getName());
+            console.log("Email: " + profile.getEmail());
+          }
+          document.getElementById('signinButton').onclick = function() {
+            auth2.signIn().then(function(response) {
+              var profile = response.getBasicProfile();
+              console.log("Name: " + profile.getName());
+              console.log("Email: " + profile.getEmail());
+            });
+          };
         });
-      };
-      appStart();
+      });
     </script>
   </body>
 </html>
