@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google API Test</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com">
-  </head>
-  <body>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <title>Google Identity Test</title>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js"></script>
     <script>
-      function onSignIn(googleUser) {
+      function onLoad() {
+        gapi.load('auth2', function() {
+          gapi.auth2.init({
+            client_id: '689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com'
+          });
+        });
+      }
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <div id="signin-button"></div>
+    <script>
+      gapi.load('signin2', function() {
+        gapi.signin2.render('signin-button', {
+          scope: 'profile email',
+          width: 240,
+          height: 50,
+          longtitle: true,
+          theme: 'dark',
+          onsuccess: onSuccess
+        });
+      });
+
+      function onSuccess(googleUser) {
         var profile = googleUser.getBasicProfile();
         console.log("Name: " + profile.getName());
         console.log("Email: " + profile.getEmail());
