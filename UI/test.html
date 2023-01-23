@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>Google Identity Test</title>
-    <script src="https://apis.google.com/js/platform.js"></script>
-    <script src="https://apis.google.com/js/client:platform.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
       function onLoad() {
         gapi.load('auth2', function() {
@@ -14,25 +13,30 @@
       }
     </script>
   </head>
-  <body onload="onLoad()">
-    <div id="signin-button"></div>
-    <script>
-      gapi.load('signin2', function() {
-        gapi.signin2.render('signin-button', {
-          scope: 'profile email',
-          width: 240,
-          height: 50,
-          longtitle: true,
-          theme: 'dark',
-          onsuccess: onSuccess
-        });
-      });
+  <body>
+    <div id="g_id_onload"
+        data-client_id="689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="testLogin"
+        data-auto_prompt="false">
+    </div>
 
-      function onSuccess(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log("Name: " + profile.getName());
-        console.log("Email: " + profile.getEmail());
-      }
-    </script>
+    <div class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left">
+    </div>
+
+    <script>
+        function testLogin(googleUser) {
+          var profile = googleUser.getBasicProfile();
+          console.log("Name: " + profile.getName());
+          console.log("Email: " + profile.getEmail());
+        }
+      </script>
   </body>
 </html>
