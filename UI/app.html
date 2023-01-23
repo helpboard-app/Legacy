@@ -23,12 +23,57 @@
         </hgroup>
         <nav>
             <ul>
-                <li><a href="#" role="button">Your Helpboards</a></li>
+                <li><button onclick="openYH()" role="button">Your Helpboards</button></li>
                 <li><a href="#" role="button">Connect To A Helpboard</a></li>
-                <li></li>
                 <li><a href="settings.html" role="button">Settings</a></li>
             </ul>
         </nav>
     </header>
+    <header id="your_helpboards">
+        <hgroup>
+          <h1>Your Helpboards:</h1>
+          <h2>
+            <ul id="board_container">
+            </ul>
+          </h2>
+        </hgroup>
+    </header>
+    <script>
+        // UI Manager
+        function colapseAll(){
+            $( "#your_helpboards" ).hide();
+            $( "#ctah" ).hide();
+        }
+
+        function openYH(){
+            colapseAll()
+            $( "#your_helpboards" ).show();
+        }
+
+        function openCTAH(){
+            colapseAll()
+            $( "#ctah" ).show();
+        }
+      
+        colapseAll()
+
+        // DB
+        var boards = new PouchDB('boards');
+
+        var boardIDs = [];
+
+        boards.allDocs({include_docs: true}).then(function(result) {
+            result.rows.forEach(function(row) {
+                boardIDs.push(row.doc.boardID);
+            });
+            console.log(boardIDs); // Array of all board IDs
+        }).catch(function(err) {
+            console.log(err);
+        });
+
+        for (const element of boardIDs) {
+            $("#board_container").append(`<li><a href="#">${element}</a></li>`);
+        }
+    </script>
 </body>
 </html>

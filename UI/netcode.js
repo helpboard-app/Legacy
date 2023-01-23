@@ -14,6 +14,13 @@ const hbnet = {
         this.boardID_parsed = this.boardID.toString().match(/.{1,3}/g)
         this.boardID_todisplay = this.boardID_parsed[0] + "-" + this.boardID_parsed[1] + "-" + this.boardID_parsed[2]
         this.dbconnectForm = new PouchDB("connectForm" + this.boardID.toString())
+
+        var boards = new PouchDB('boards');
+        boards.put({
+            _id: this.boardID,
+            boardID: this.boardID,
+        });
+
         this.host = function(){
             // Connect to the HBL Network
             try {
