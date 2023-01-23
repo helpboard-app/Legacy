@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Identity Test</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
-      function onLoad() {
-        gapi.load('auth2', function() {
-          gapi.auth2.init({
-            client_id: '689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com'
-          });
-        });
-      }
-    </script>
+    <title>Google Sign-In Test</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com">
   </head>
   <body>
-    <div id="g_id_onload"
-        data-client_id="689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com"
-        data-context="signin"
-        data-ux_mode="popup"
-        data-callback="testLogin"
-        data-auto_prompt="false">
-    </div>
-
-    <div class="g_id_signin"
-        data-type="standard"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="large"
-        data-logo_alignment="left">
-    </div>
-
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <script>
-        function testLogin(googleUser) {
-          var profile = googleUser.getBasicProfile();
-          console.log("Name: " + profile.getName());
-          console.log("Email: " + profile.getEmail());
-        }
-      </script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("Name: " + profile.getName());
+        console.log("Email: " + profile.getEmail());
+      }
+    </script>
   </body>
 </html>
