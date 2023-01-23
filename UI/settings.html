@@ -73,8 +73,9 @@
                 if (!Array.isArray(boardIDs) || !boardIDs.length) {
                     // array does not exist, is not an array, or is empty
                     alert("You have no Helpboards.")
-                }
-                download("HBL_Boards", JSON.stringify(boardIDs))
+                } else {
+                    download("HBL_Boards", JSON.stringify(boardIDs))
+                } 
             }).catch(function(err) {
                 console.log(err);
             });
