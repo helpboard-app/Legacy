@@ -90,6 +90,26 @@
                 alert(err)
             });
         });
+
+        document.getElementById("importDatabase").addEventListener("change", function(){
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(){
+                var boards = new PouchDB('boards');
+                var text = reader.result;
+                // do something with the text here
+                var boardIDs = JSON.parse(text);
+                for (const element of boardIDs) {
+                    console.log(element);
+                    boards.put({
+                        _id: element.toString(),
+                        boardID: element.toString(),
+                    });
+                }
+                alert("Loaded Database")
+            };
+            reader.readAsText(file);
+        });
      </script>
 </body>
 </html>

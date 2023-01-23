@@ -18,7 +18,7 @@ const hbnet = {
         var boards = new PouchDB('boards');
         boards.put({
             _id: this.boardID.toString(),
-            boardID: this.boardID,
+            boardID: this.boardID.toString(),
         });
 
         this.host = function(){
