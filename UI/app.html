@@ -31,11 +31,16 @@
     </header>
     <header id="your_helpboards">
         <hgroup>
-          <h1>Your Helpboards:</h1>
+          <h1 id="yhb">Your Helpboards:</h1>
           <h2>
-            <button onclick="" role="button">Create Helpboard</button>
+            <button onclick="createHelpboard()" role="button" id="chb">Create Helpboard</button>
             <ul id="board_container">
             </ul>
+            <form id="chbf" action="#">
+                <input type="text" name="hbname" placeholder="Helpboard Name" id="hbname">
+                <input type="hidden" name="jsonformurl" value="https://helpboard-app.github.io/Legacy/UI/forms/board_default.json" id="jfu">
+                <button type="submit">Create</button>
+            </form>
           </h2>
         </hgroup>
     </header>
@@ -44,6 +49,7 @@
         function colapseAll(){
             $( "#your_helpboards" ).hide();
             $( "#ctah" ).hide();
+            $( "#chbf" ).hide();
         }
 
         function openYH(){
@@ -55,6 +61,22 @@
             colapseAll()
             $( "#ctah" ).show();
         }
+
+        function createHelpboard(){
+            $( "#board_container" ).hide();
+            $( "#chb" ).hide();
+            $( "#yhb" ).text("Create Helpboard:");
+            $( "#chbf" ).show();
+        }
+
+         	
+
+        $( "#chbf" ).submit(function( event ) {
+            new hbnet.Board($( "#hbname" ).val(), $( "#jfu" ).val())
+            colapseAll()
+            openYH()
+            event.preventDefault();
+        });
       
         colapseAll()
 
