@@ -132,3 +132,5 @@ const hbnet = {
         }
     }
 }
+
+export default hbnet
