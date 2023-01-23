@@ -65,15 +65,12 @@
         boards.allDocs({include_docs: true}).then(function(result) {
             result.rows.forEach(function(row) {
                 boardIDs.push(row.doc.boardID);
+                $("#board_container").append(`<li><a href="#">${row.doc.boardID}</a></li>`);
             });
             console.log(boardIDs); // Array of all board IDs
         }).catch(function(err) {
             console.log(err);
         });
-
-        for (const element of boardIDs) {
-            $("#board_container").append(`<li><a href="#">${element}</a></li>`);
-        }
     </script>
 </body>
 </html>
