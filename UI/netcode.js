@@ -133,4 +133,4 @@ const hbnet = {
     }
 }
 
-export default hbnet
+export {hbnet}
