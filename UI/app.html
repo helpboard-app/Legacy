@@ -33,6 +33,7 @@
         <hgroup>
           <h1>Your Helpboards:</h1>
           <h2>
+            <button onclick="" role="button">Create Helpboard</button>
             <ul id="board_container">
             </ul>
           </h2>
@@ -71,6 +72,11 @@
         }).catch(function(err) {
             console.log(err);
         });
+
+        if (!Array.isArray(boardIDs) || !boardIDs.length) {
+            // array does not exist, is not an array, or is empty
+            $("#board_container").append(`<li>You have no Helpboards.</li>`);
+        }
     </script>
 </body>
 </html>

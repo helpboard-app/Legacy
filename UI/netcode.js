@@ -36,7 +36,9 @@ const hbnet = {
             }
             // Initialize Actions
             const [submitConnectForm, receiveConnectForm] = this.room.makeAction('connectForm')
+            const [sendMeta, getMeta] = this.room.makeAction('meta')
             const [sendName, getName] = this.room.makeAction('name')
+
             const idsToNames = {}
             function inverse(obj){
                 var retobj = {};
@@ -56,7 +58,9 @@ const hbnet = {
                     throw new Error("Admin Already Exists!");
                 } else {
                     this.room.onPeerJoin(peerId => sendName('87ab8a8b-35eb-45b8-a826-c9babdbbcdf8', peerId))
+                    this.room.onPeerJoin(peerId => sendMeta(JSON.stringify({jsonformurl: jsonformurl}), peerId))
                     sendName('87ab8a8b-35eb-45b8-a826-c9babdbbcdf8')
+                    sendMeta(JSON.stringify({jsonformurl: jsonformurl}))
                 }
             }, 5000);
             receiveConnectForm((data, peerId) => {
@@ -86,6 +90,7 @@ const hbnet = {
         this.boardID = boardID
         this.name = name
         this.debug = debug
+        this.meta = {}
         this.send = function(){
             // Connect to the HBL Network
             try {
@@ -102,6 +107,7 @@ const hbnet = {
             // Initialize Actions
             const [submitConnectForm, receiveConnectForm] = this.room.makeAction('connectForm')
             const [sendName, getName] = this.room.makeAction('name')
+            const [sendMeta, getMeta] = this.room.makeAction('meta')
             function inverse(obj){
                 var retobj = {};
                 for(var key in obj){
@@ -111,6 +117,8 @@ const hbnet = {
             }
             const idsToNames = {}
             // Handle Actions
+            getMeta((data, peerId) => (this.meta = JSON.parse(data)))
+
             this.room.onPeerJoin(peerId => sendName(name, peerId))
             sendName(name)
             getName((name, peerId) => (idsToNames[peerId] = name))
