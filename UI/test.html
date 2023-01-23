@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google OAuth 2.0 Test</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/api:client.js"></script>
+    <title>Firebase Authentication Test</title>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script>
+    // Initialize Firebase
+      const firebaseConfig = {
+
+        apiKey: "AIzaSyBf5u6AQcwCCByY-9nGJa6xFGfvRXrq_Mw",
+
+        authDomain: "hblegacy.firebaseapp.com",
+
+        projectId: "hblegacy",
+
+        storageBucket: "hblegacy.appspot.com",
+
+        messagingSenderId: "689046095920",
+
+        appId: "1:689046095920:web:b90907877e857c6b9e85f5",
+
+        measurementId: "G-43Y3RPMB8R"
+
+      };
+      firebase.initializeApp(firebaseConfig);
+      var provider = new firebase.auth.GoogleAuthProvider();
+    </script>
   </head>
   <body>
-    <a href="#" id="signinButton">Sign In</a>
+    <button id="googleSignInButton">Sign in with Google</button>
     <script>
-      gapi.load('client:auth2', function() {
-        gapi.client.init({
-          clientId: '689046095920-kklp2t636be5gtm69obhbq13s7sc86hl.apps.googleusercontent.com',
-          scope: 'https://www.googleapis.com/auth/plus.login'
-        }).then(function() {
-          var auth2 = gapi.auth2.getAuthInstance();
-          if (auth2.isSignedIn.get()) {
-            var profile = auth2.currentUser.get().getBasicProfile();
-            console.log("Name: " + profile.getName());
-            console.log("Email: " + profile.getEmail());
-          }
-          document.getElementById('signinButton').onclick = function() {
-            auth2.signIn().then(function(response) {
-              var profile = response.getBasicProfile();
-              console.log("Name: " + profile.getName());
-              console.log("Email: " + profile.getEmail());
+      // Get the sign-in button
+      var googleSignInButton = document.getElementById('googleSignInButton');
+
+      // Add a click listener to the button
+      googleSignInButton.addEventListener('click', function() {
+        // Sign in with Google
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+                // This gives you a Google Access Token.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                // Get user's name and email
+                var name = user.displayName;
+                var email = user.email;
+                // Log name and email to console
+                console.log("Name: " + name);
+                console.log("Email: " + email);
+            }).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                console.log(errorCode + ": " + errorMessage);
             });
-          };
         });
-      });
     </script>
   </body>
 </html>
