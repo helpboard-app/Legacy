@@ -70,7 +70,7 @@
             });
             if (!Array.isArray(boardIDs) || !boardIDs.length) {
                 // array does not exist, is not an array, or is empty
-                alert("You have no Helpboards.")
+                $("#board_container").append(`<li>You have no Helpboards.</li>`);
             }
             console.log(boardIDs); // Array of all board IDs
         }).catch(function(err) {
