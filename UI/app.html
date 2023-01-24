@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonform/2.2.5/jsonform.js" integrity="sha512-7+/iHAMg7Yn0B7v6kbWoZYGstHvUeehAe0Rd77bndsvA0jk5z7fQt0qagSyvCRrr6pCBVDUUZlIXlcVhSv2l6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/openpgp@latest/dist/openpgp.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.0/dist/pouchdb.min.js"></script>
-    <script type="module" src="netcode.js"></script>
     <!-- Ends here -->
 </head>
 <body>
@@ -71,12 +70,7 @@
 
          	
 
-        $( "#chbf" ).submit(function( event ) {
-            new hbnet.Board($( "#hbname" ).val(), $( "#jfu" ).val())
-            colapseAll()
-            openYH()
-            event.preventDefault();
-        });
+        
       
         colapseAll()
 
@@ -88,7 +82,7 @@
         boards.allDocs({include_docs: true}).then(function(result) {
             result.rows.forEach(function(row) {
                 boardIDs.push(row.doc.boardID);
-                $("#board_container").append(`<li><a href="#">${row.doc.boardID}</a></li>`);
+                $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
             });
             if (!Array.isArray(boardIDs) || !boardIDs.length) {
                 // array does not exist, is not an array, or is empty
@@ -97,6 +91,38 @@
             console.log(boardIDs); // Array of all board IDs
         }).catch(function(err) {
             console.log(err);
+        });
+    </script>
+    <script type="module">
+        import {hbnet} from '/netcode.js'
+
+        $( "#chbf" ).submit(function( event ) {
+            new hbnet.Board({name: $( "#hbname" ).val(), jsonformurl: $( "#jfu" ).val()})
+            $( "#board_container" ).show();
+            $( "#board_container" ).empty();
+            $( "#chb" ).show();
+            $( "#yhb" ).text("Your Helpboards:");
+            $( "#chbf" ).hide();
+
+
+            var boards = new PouchDB('boards');
+
+            var boardIDs = [];
+
+            boards.allDocs({include_docs: true}).then(function(result) {
+                result.rows.forEach(function(row) {
+                    boardIDs.push(row.doc.boardID);
+                    $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
+                });
+                if (!Array.isArray(boardIDs) || !boardIDs.length) {
+                    // array does not exist, is not an array, or is empty
+                    $("#board_container").append(`<li>You have no Helpboards.</li>`);
+                }
+                console.log(boardIDs); // Array of all board IDs
+            }).catch(function(err) {
+                console.log(err);
+            });
+            event.preventDefault();
         });
     </script>
 </body>

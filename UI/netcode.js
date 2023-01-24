@@ -2,24 +2,41 @@ import {joinRoom} from 'https://cdn.skypack.dev/trystero'
 const baseConfig = {appId: 'HelpboardLegacy'}
 
 const hbnet = {
-    Board: function(name, jsonformurl, boardID, debug){
+    Board: function({name, jsonformurl, boardID, debug, loadfromdb}){
         this.debug = debug
-        this.boardName = name
-        this.formJsonUrl = jsonformurl
-        if (boardID != null && Number.isInteger(boardID) && boardID.toString().length == 9){
+        var boards = new PouchDB('boards');
+        if (boardID != null && Number.isInteger(boardID) && boardID.toString().length == 9 && loadfromdb == true){
             this.boardID = boardID
+            loadfromdb = true
         } else {
             this.boardID = Math.floor(100000000 + Math.random() * 900000000)
+            loadfromdb = false
+        }
+        if(loadfromdb != false){
+            boards.get(this.boardID.toString()).then(function (doc){
+                this.boardName = doc.name
+                this.formJsonUrl = doc.jsonformurl
+            }).catch(function (err) {
+                console.log(err);
+            });
+        } else {
+            this.boardName = name
+            this.formJsonUrl = jsonformurl
         }
         this.boardID_parsed = this.boardID.toString().match(/.{1,3}/g)
         this.boardID_todisplay = this.boardID_parsed[0] + "-" + this.boardID_parsed[1] + "-" + this.boardID_parsed[2]
         this.dbconnectForm = new PouchDB("connectForm" + this.boardID.toString())
 
-        var boards = new PouchDB('boards');
-        boards.put({
-            _id: this.boardID.toString(),
-            boardID: this.boardID.toString(),
-        });
+        if(loadfromdb != false){
+            // Do nothing
+        } else {
+            boards.put({
+                _id: this.boardID.toString(),
+                boardID: this.boardID.toString(),
+                name: this.boardName,
+                jsonformurl: this.formJsonUrl,
+            });
+        }
 
         this.host = function(){
             // Connect to the HBL Network
