@@ -39,6 +39,7 @@
               <label for="importDatabase" role="button" style="text-align: center; width: 100%;">Import Database</label>
               <button style="text-align: center" id="exportDatabase">Export Database</button>
               <button style="text-align: center" id="resetDatabase">Reset Database</button>
+              <button style="text-align: center" id="setName">Set Name</button>
               <button style="text-align: center" onclick="history.back()">Go Back</button>
 
               <input type="file" id="importDatabase" style="visibility:hidden;">
@@ -109,6 +110,12 @@
             };
             reader.readAsText(file);
         });
+
+        $("#setName").click(function(){
+            var name = prompt("What name would you like Helpboard to greet you with?")
+            localStorage.setItem("user_name", name)
+            alert("Name Set!")
+        })
      </script>
 </body>
 </html>

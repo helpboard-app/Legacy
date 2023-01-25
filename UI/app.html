@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,17 +9,22 @@
     <!-- All Code Below Should Be Mirrored Across All Pages -->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonform/2.2.5/jsonform.js" integrity="sha512-7+/iHAMg7Yn0B7v6kbWoZYGstHvUeehAe0Rd77bndsvA0jk5z7fQt0qagSyvCRrr6pCBVDUUZlIXlcVhSv2l6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"
+        integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonform/2.2.5/jsonform.js"
+        integrity="sha512-7+/iHAMg7Yn0B7v6kbWoZYGstHvUeehAe0Rd77bndsvA0jk5z7fQt0qagSyvCRrr6pCBVDUUZlIXlcVhSv2l6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/openpgp@latest/dist/openpgp.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.0/dist/pouchdb.min.js"></script>
     <!-- Ends here -->
 </head>
+
 <body>
     <header>
         <hgroup>
-          <h1>Helpboard Legacy</h1>
-          <h2>Build L1.0.1</h2>
+            <h1>Helpboard Legacy</h1>
+            <h2>Build L1.0.1</h2>
         </hgroup>
         <nav>
             <ul>
@@ -28,50 +34,64 @@
             </ul>
         </nav>
     </header>
+    <header id="welcomeux">
+        <hgroup>
+            <h1 id="greeting">👋, {{name}}</h1>
+            <h2>Welcome back to Helpboard Legacy! Have a great day!</h2>
+        </hgroup>
+    </header>
     <header id="your_helpboards">
         <hgroup>
-          <h1 id="yhb">Your Helpboards:</h1>
-          <h2>
-            <button onclick="createHelpboard()" role="button" id="chb">Create Helpboard</button>
-            <ul id="board_container">
-            </ul>
-            <form id="chbf" action="#">
-                <input type="text" name="hbname" placeholder="Helpboard Name" id="hbname">
-                <input type="hidden" name="jsonformurl" value="https://helpboard-app.github.io/Legacy/UI/forms/board_default.json" id="jfu">
-                <button type="submit">Create</button>
-            </form>
-          </h2>
+            <h1 id="yhb">Your Helpboards:</h1>
+            <h2>
+                <button onclick="createHelpboard()" role="button" id="chb">Create Helpboard</button>
+                <ul id="board_container">
+                </ul>
+                <form id="chbf" action="#">
+                    <input type="text" name="hbname" placeholder="Helpboard Name" id="hbname">
+                    <input type="hidden" name="jsonformurl"
+                        value="https://helpboard-app.github.io/Legacy/UI/forms/board_default.json" id="jfu">
+                    <button type="submit">Create</button>
+                </form>
+            </h2>
         </hgroup>
     </header>
     <script>
         // UI Manager
-        function colapseAll(){
-            $( "#your_helpboards" ).hide();
-            $( "#ctah" ).hide();
-            $( "#chbf" ).hide();
+        $("#greeting").text("Hello, " + localStorage.getItem("user_name") || "user")
+
+        function colapseAll() {
+            $("#your_helpboards").hide();
+            $("#ctah").hide();
+            $("#chbf").hide();
         }
 
-        function openYH(){
+        function openYH() {
             colapseAll()
-            $( "#your_helpboards" ).show();
+            $("#welcomeux").hide();
+            $("#board_container").show();
+            $("#chb").show();
+            $("#your_helpboards").show();
+            $("#yhb").text("Your Helpboards:");
         }
 
-        function openCTAH(){
+        function openCTAH() {
             colapseAll()
-            $( "#ctah" ).show();
+            $("#welcomeux").hide();
+            $("#ctah").show();
         }
 
-        function createHelpboard(){
-            $( "#board_container" ).hide();
-            $( "#chb" ).hide();
-            $( "#yhb" ).text("Create Helpboard:");
-            $( "#chbf" ).show();
+        function createHelpboard() {
+            $("#board_container").hide();
+            $("#chb").hide();
+            $("#yhb").text("Create Helpboard:");
+            $("#chbf").show();
         }
 
-         	
 
-        
-      
+
+
+
         colapseAll()
 
         // DB
@@ -79,8 +99,8 @@
 
         var boardIDs = [];
 
-        boards.allDocs({include_docs: true}).then(function(result) {
-            result.rows.forEach(function(row) {
+        boards.allDocs({ include_docs: true }).then(function (result) {
+            result.rows.forEach(function (row) {
                 boardIDs.push(row.doc.boardID);
                 $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
             });
@@ -89,28 +109,28 @@
                 $("#board_container").append(`<li>You have no Helpboards.</li>`);
             }
             console.log(boardIDs); // Array of all board IDs
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(err);
         });
     </script>
     <script type="module">
-        import {hbnet} from '/netcode.js'
+        import { hbnet } from '/netcode.js'
 
-        $( "#chbf" ).submit(function( event ) {
-            new hbnet.Board({name: $( "#hbname" ).val(), jsonformurl: $( "#jfu" ).val()})
-            $( "#board_container" ).show();
-            $( "#board_container" ).empty();
-            $( "#chb" ).show();
-            $( "#yhb" ).text("Your Helpboards:");
-            $( "#chbf" ).hide();
+        $("#chbf").submit(function (event) {
+            new hbnet.Board({ name: $("#hbname").val(), jsonformurl: $("#jfu").val(), loadfromdb: false})
+            $("#board_container").show();
+            $("#board_container").empty();
+            $("#chb").show();
+            $("#yhb").text("Your Helpboards:");
+            $("#chbf").hide();
 
 
             var boards = new PouchDB('boards');
 
             var boardIDs = [];
 
-            boards.allDocs({include_docs: true}).then(function(result) {
-                result.rows.forEach(function(row) {
+            boards.allDocs({ include_docs: true }).then(function (result) {
+                result.rows.forEach(function (row) {
                     boardIDs.push(row.doc.boardID);
                     $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
                 });
@@ -119,11 +139,12 @@
                     $("#board_container").append(`<li>You have no Helpboards.</li>`);
                 }
                 console.log(boardIDs); // Array of all board IDs
-            }).catch(function(err) {
+            }).catch(function (err) {
                 console.log(err);
             });
             event.preventDefault();
         });
     </script>
 </body>
+
 </html>

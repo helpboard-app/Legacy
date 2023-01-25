@@ -28,6 +28,18 @@
         vertical-align: middle;
     }
     </style>
+    <script>
+        // Check 1st run
+        if(localStorage.getItem("user_name") == null || localStorage.getItem("user_name") == "null"){
+            while(true){
+                var name = prompt("First run setup | What name would you like Helpboard to greet you with?")
+                if(name != "null"){
+                    localStorage.setItem("user_name", name)
+                    break;
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <header>

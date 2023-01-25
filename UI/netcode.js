@@ -3,19 +3,24 @@ const baseConfig = {appId: 'HelpboardLegacy'}
 
 const hbnet = {
     Board: function({name, jsonformurl, boardID, debug, loadfromdb}){
+        this.loadfromdb = loadfromdb
         this.debug = debug
-        var boards = new PouchDB('boards');
-        if (boardID != null && Number.isInteger(boardID) && boardID.toString().length == 9 && loadfromdb == true){
+        this.boardName = null
+        this.formJsonUrl = null
+        function setVars({bn, fju}){
+            this.boardName = bn
+            this.formJsonUrl = fju
+        }
+        this.boardsdb = new PouchDB('boards');
+        if (this.loadfromdb == true){
             this.boardID = boardID
-            loadfromdb = true
         } else {
             this.boardID = Math.floor(100000000 + Math.random() * 900000000)
-            loadfromdb = false
         }
-        if(loadfromdb != false){
-            boards.get(this.boardID.toString()).then(function (doc){
-                this.boardName = doc.name
-                this.formJsonUrl = doc.jsonformurl
+        if(this.loadfromdb != false){
+            this.boardsdb.get(this.boardID.toString()).then(function (doc){
+                setVars(doc.name, doc.jsonformurl)
+                console.log(doc)
             }).catch(function (err) {
                 console.log(err);
             });
@@ -27,17 +32,17 @@ const hbnet = {
         this.boardID_todisplay = this.boardID_parsed[0] + "-" + this.boardID_parsed[1] + "-" + this.boardID_parsed[2]
         this.dbconnectForm = new PouchDB("connectForm" + this.boardID.toString())
 
-        if(loadfromdb != false){
+        if(this.loadfromdb != false){
             // Do nothing
         } else {
-            boards.put({
+            this.boardsdb.put({
                 _id: this.boardID.toString(),
                 boardID: this.boardID.toString(),
                 name: this.boardName,
                 jsonformurl: this.formJsonUrl,
             });
         }
-
+        console.log(this)
         this.host = function(){
             // Connect to the HBL Network
             try {
