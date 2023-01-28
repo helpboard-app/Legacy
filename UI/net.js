@@ -14,7 +14,7 @@ const net = {
         this.boardsdb.get(boardid).then(function (doc) {
           }).catch(function (err) {
             if (err.status === 404) {
-                this.db.put({
+                this.boardsdb.put({
                     _id: boardid.toString(),
                     boardID: boardid.toString()
                 });
