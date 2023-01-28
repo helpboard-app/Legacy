@@ -44,7 +44,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
 
-        $("#boardid").text("Board ID: " + params.b)
+        $("#boardid").text("Board ID: " + params.b.toString())
 
         var board = new net.Board({boardid: params.b, cb: function(status){
             if(status.status == "initalized"){
