@@ -11,7 +11,7 @@ const net = {
         this.network = joinRoom(baseConfig, boardid.toString())
         this.boardid = boardid
 
-        this.boardsdbdb.get(boardid).then(function (doc) {
+        this.boardsdb.get(boardid).then(function (doc) {
           }).catch(function (err) {
             if (err.status === 404) {
                 this.db.put({
