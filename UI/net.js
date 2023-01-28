@@ -13,14 +13,15 @@ const net = {
 
         this.boardsdb.get(boardid.toString()).then(function (doc) {
           }).catch(function (err) {
+            boardsdb = new PouchDB('boards');
             if (err.status === 404) {
-                this.boardsdb.put({
+                boardsdb.put({
                     _id: boardid.toString(),
                     boardID: boardid.toString()
                 });
             } else {
               console.log('Error checking for document:', err);
-              this.statusHandler({status: false, err: `Error checking for document: ${err}`})
+              //this.statusHandler({status: false, err: `Error checking for document: ${err}`})
             }
         });
     },
