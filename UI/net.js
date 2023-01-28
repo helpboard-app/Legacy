@@ -4,14 +4,14 @@ const baseConfig = {appId: 'HelpboardLegacy'}
 const net = {
     Board: function({boardid}){
         this.statusHandler = function(status){
-            return true;
+            return status;
         }
         this.db = new PouchDB('board' + boardid);
         this.boardsdb = new PouchDB('boards');
         this.network = joinRoom(baseConfig, boardid.toString())
         this.boardid = boardid
 
-        this.boardsdb.get(boardid).then(function (doc) {
+        this.boardsdb.get(boardid.toString()).then(function (doc) {
           }).catch(function (err) {
             if (err.status === 404) {
                 this.boardsdb.put({
