@@ -16,7 +16,7 @@ const net = {
             if (err.status === 404) {
                 this.db.put({
                     _id: boardid.toString(),
-                    boardID: boardid
+                    boardID: boardid.toString()
                 });
             } else {
               console.log('Error checking for document:', err);
@@ -24,7 +24,7 @@ const net = {
             }
         });
     },
-    Client: function(boardid){
+    Client: function({boardid}){
         this.statusHandler = function(status){
             return true;
         }

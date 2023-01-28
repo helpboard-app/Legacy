@@ -88,10 +88,6 @@
             $("#chbf").show();
         }
 
-
-
-
-
         colapseAll()
 
         // DB
@@ -114,7 +110,9 @@
         });
     </script>
     <script type="module">
+        import {net} from "/net.js"
         $("#chbf").submit(function (event) {
+            new net.Board({boardid: Math.floor(100000000 + Math.random() * 900000000)})
             $("#board_container").show();
             $("#board_container").empty();
             $("#chb").show();
