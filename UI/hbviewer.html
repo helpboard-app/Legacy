@@ -38,13 +38,6 @@
 
         </hgroup>
     </header>
-    <script type="module">
-        import { hbnet } from '/netcode.js'
-        const parsedHash = new URLSearchParams(
-            window.location.hash.substring(1) // skip the first char (#)
-        );
-        var currentBoard = new hbnet.Board({ loadfromdb: true, boardID: parsedHash.get("b").toString()})
-        
     </script>
 </body>
 

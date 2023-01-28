@@ -114,10 +114,7 @@
         });
     </script>
     <script type="module">
-        import { hbnet } from '/netcode.js'
-
         $("#chbf").submit(function (event) {
-            new hbnet.Board({ name: $("#hbname").val(), jsonformurl: $("#jfu").val(), loadfromdb: false})
             $("#board_container").show();
             $("#board_container").empty();
             $("#chb").show();
