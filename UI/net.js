@@ -13,7 +13,7 @@ const net = {
 
         this.boardsdb.get(boardid.toString()).then(function (doc) {
           }).catch(function (err) {
-            boardsdb = new PouchDB('boards');
+            var boardsdb = new PouchDB('boards');
             if (err.status === 404) {
                 boardsdb.put({
                     _id: boardid.toString(),
