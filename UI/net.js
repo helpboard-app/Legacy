@@ -2,7 +2,7 @@ import {joinRoom} from 'https://cdn.skypack.dev/trystero'
 const baseConfig = {appId: 'HelpboardLegacy'}
 
 const net = {
-    Board: function({boardid}){
+    Board: function({boardid, cb}){
         this.statusHandler = function(status){
             return status;
         }
@@ -18,7 +18,9 @@ const net = {
                 boardsdb.put({
                     _id: boardid.toString(),
                     boardID: boardid.toString()
-                });
+                }).then(function (doc) {
+                    cb({status: "initalized"})
+                })
             } else {
               console.log('Error checking for document:', err);
               //this.statusHandler({status: false, err: `Error checking for document: ${err}`})

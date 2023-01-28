@@ -112,31 +112,34 @@
     <script type="module">
         import {net} from "./net.js"
         $("#chbf").submit(function (event) {
-            new net.Board({boardid: Math.floor(100000000 + Math.random() * 900000000)})
-            $("#board_container").show();
-            $("#board_container").empty();
-            $("#chb").show();
-            $("#yhb").text("Your Helpboards:");
-            $("#chbf").hide();
+            new net.Board({boardid: Math.floor(100000000 + Math.random() * 900000000), cb: function(status){
+                if(status.status == "initalized"){
+                    $("#board_container").show();
+                    $("#board_container").empty();
+                    $("#chb").show();
+                    $("#yhb").text("Your Helpboards:");
+                    $("#chbf").hide();
 
 
-            var boards = new PouchDB('boards');
+                    var boards = new PouchDB('boards');
 
-            var boardIDs = [];
+                    var boardIDs = [];
 
-            boards.allDocs({ include_docs: true }).then(function (result) {
-                result.rows.forEach(function (row) {
-                    boardIDs.push(row.doc.boardID);
-                    $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
-                });
-                if (!Array.isArray(boardIDs) || !boardIDs.length) {
-                    // array does not exist, is not an array, or is empty
-                    $("#board_container").append(`<li>You have no Helpboards.</li>`);
+                    boards.allDocs({ include_docs: true }).then(function (result) {
+                        result.rows.forEach(function (row) {
+                            boardIDs.push(row.doc.boardID);
+                            $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
+                        });
+                        if (!Array.isArray(boardIDs) || !boardIDs.length) {
+                            // array does not exist, is not an array, or is empty
+                            $("#board_container").append(`<li>You have no Helpboards.</li>`);
+                        }
+                        console.log(boardIDs); // Array of all board IDs
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
                 }
-                console.log(boardIDs); // Array of all board IDs
-            }).catch(function (err) {
-                console.log(err);
-            });
+            }})
             event.preventDefault();
         });
     </script>
