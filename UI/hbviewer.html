@@ -44,7 +44,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
 
-        $("#boardid").text(params.b)
+        $("#boardid").text("Board ID: " + params.b)
 
         var board = new net.Board({boardid: params.b, cb: function(status){
             if(status.status == "initalized"){
@@ -52,7 +52,7 @@
                     if (error) {
                         console.log(error)
                     } else {
-                        $("#boardname").text("Board ID: " + doc.name)
+                        $("#boardname").text(+ doc.name)
                     }
                 });
             }
