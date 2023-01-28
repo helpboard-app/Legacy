@@ -24,20 +24,39 @@
     <header>
         <hgroup>
             <h1 id="boardname"></h1>
+            <div id="boardid">Board ID: 999-999-999</div>
             <h2>Helpboard Legacy Build L1.0.1</h2>
+          
         </hgroup>
         <nav>
             <ul>
-                <li><a href="app.html" role="button">Home</a></li>
+                <li><a href="./app.html" role="button">Home</a></li>
+                <li><a href="#" role="button">Classroom Display</a></li>
                 <li><a href="#" role="button">Helpboard Settings</a></li>
             </ul>
         </nav>
     </header>
     <header>
-        <hgroup>
-
-        </hgroup>
     </header>
+    <script type="module">
+        import {net} from "./net.js"
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        $("#boardid").text(params.b)
+
+        var board = new net.Board({boardid: params.b, cb: function(status){
+            if(status.status == "initalized"){
+                board.boardsdb.get(params.b.toString(), function (error, doc) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        $("#boardname").text(doc.name)
+                    }
+                });
+            }
+        }})
     </script>
 </body>
 

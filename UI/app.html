@@ -30,7 +30,7 @@
             <ul>
                 <li><button onclick="openYH()" role="button">Your Helpboards</button></li>
                 <li><a href="#" role="button">Connect To A Helpboard</a></li>
-                <li><a href="settings.html" role="button">Settings</a></li>
+                <li><a href="./settings.html" role="button">Settings</a></li>
             </ul>
         </nav>
     </header>
@@ -98,7 +98,7 @@
         boards.allDocs({ include_docs: true }).then(function (result) {
             result.rows.forEach(function (row) {
                 boardIDs.push(row.doc.boardID);
-                $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
+                $("#board_container").append(`<li><a href="./hbviewer.html?b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
             });
             if (!Array.isArray(boardIDs) || !boardIDs.length) {
                 // array does not exist, is not an array, or is empty
@@ -128,7 +128,7 @@
                     boards.allDocs({ include_docs: true }).then(function (result) {
                         result.rows.forEach(function (row) {
                             boardIDs.push(row.doc.boardID);
-                            $("#board_container").append(`<li><a href="/hbviewer.html#b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
+                            $("#board_container").append(`<li><a href="./hbviewer.html?b=${row.doc.boardID}">${row.doc.boardID} | ${row.doc.name}</a></li>`);
                         });
                         if (!Array.isArray(boardIDs) || !boardIDs.length) {
                             // array does not exist, is not an array, or is empty
