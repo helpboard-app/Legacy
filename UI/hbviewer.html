@@ -62,11 +62,11 @@
                         $("#boardname").text(doc.name)
                     }
                 });
-                $( "#boardid" ).attr( "aria-busy", "false" )
-                $("#boardid").text("✅ HBN Status: Connected")
+                $( "#netstatus" ).attr( "aria-busy", "false" )
+                $("#netstatus").text("✅ HBN Status: Connected")
             } else if (status.status == "failedinit"){
-                $( "#boardid" ).attr( "aria-busy", "false" )
-                $("#boardid").text("❌ HBN Status: Failed To Connect")
+                $( "#netstatus" ).attr( "aria-busy", "false" )
+                $("#netstatus").text("❌ HBN Status: Failed To Connect")
             }
         }})
     </script>
