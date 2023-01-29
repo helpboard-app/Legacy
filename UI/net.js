@@ -13,6 +13,12 @@ const net = {
 
         this.network.onPeerJoin(peerId => console.log(`${peerId} joined`))
         this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
+        const [sendClmsg, getClmsg] = this.network.makeAction('clmsg')
+        getClmsg((data, peerId) =>
+            console.log(
+                `${peerId}: ${data}`
+            )
+        )
 
         this.boardsdb.get(boardid.toString()).then(function (doc) {
             cb({status: "initalized"})
