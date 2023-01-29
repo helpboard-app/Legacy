@@ -11,6 +11,9 @@ const net = {
         this.network = joinRoom(baseConfig, boardid.toString())
         this.boardid = boardid
 
+        this.network.onPeerJoin(peerId => console.log(`${peerId} joined`))
+        this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
+
         this.boardsdb.get(boardid.toString()).then(function (doc) {
             cb({status: "initalized"})
           }).catch(function (err) {
