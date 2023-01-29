@@ -47,6 +47,7 @@
     </main>
     <script type="module">
         import {net} from "./net.js"
+        import {formHandler} from "./formHandle.js"
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
@@ -62,8 +63,17 @@
                         $("#boardname").text(doc.name)
                     }
                 });
+                
+                var formHandle = new formHandler(board)
+
                 $( "#netstatus" ).attr( "aria-busy", "false" )
                 $("#netstatus").text("✅ HBN Status: Connected")
+
+                board.formDB.allDocs({include_docs: true}).then(function(result) {
+                    result.rows.forEach(function(row) {
+                        $('#subbox').append('<li>' + row.doc.submiterName + " | " + row.doc.submitionID + '</li>');
+                    });
+                });
             } else if (status.status == "failedinit"){
                 $( "#netstatus" ).attr( "aria-busy", "false" )
                 $("#netstatus").text("❌ HBN Status: Failed To Connect")
