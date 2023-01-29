@@ -13,6 +13,7 @@ const net = {
 
         this.network.onPeerJoin(peerId => console.log(`${peerId} joined`))
         this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
+        console.log("My Network ID: " + this.network.selfId)
         const [sendClmsg, getClmsg] = this.network.makeAction('clmsg')
         getClmsg((data, peerId) =>
             console.log(
