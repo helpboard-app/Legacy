@@ -11,9 +11,9 @@ const net = {
         this.network = joinRoom(baseConfig, boardid.toString())
         this.boardid = boardid
 
-        this.network.onPeerJoin(peerId => console.log(`${peerId} joined`))
+        this.network.onPeerJoin(peerId => console.log(`${peerId} joined. My Network ID: ${this.network.selfId}`))
         this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
-        console.log("My Network ID: " + this.network.selfId)
+
         const [sendClmsg, getClmsg] = this.network.makeAction('clmsg')
         getClmsg((data, peerId) =>
             console.log(
