@@ -9,7 +9,14 @@ const formHandler = function(netObj){
         var formData = data.formData
         var submitionID = Math.floor(100000000 + Math.random() * 900000000).toString()
 
-        
+        console.log(
+            `${peerId} sent form:
+            ${submiterName}
+            ${submitionDate}
+            ${submiterId}
+            ${formData}
+            ${submitionID}`
+        )
 
         netObj.formDB.put({
             _id: submitionID,
