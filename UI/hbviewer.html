@@ -71,6 +71,7 @@
 
                 board.formDB.allDocs({include_docs: true}).then(function(result) {
                     result.rows.forEach(function(row) {
+                        console.log(row)
                         $('#subbox').append('<li>' + row.doc.submiterName + " | " + row.doc.submitionID + '</li>');
                     });
                 });
