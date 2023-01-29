@@ -24,9 +24,9 @@
     <header>
         <hgroup>
             <h1 id="boardname"></h1>
-            <div id="boardid">Board ID: 999-999-999</div>
+            <div id="boardid">Board ID: </div>
+            <div id="netstatus" aria-busy="true">HBN Status: Connecting</div>
             <h2>Helpboard Legacy Build L1.0.1</h2>
-          
         </hgroup>
         <nav>
             <ul>
@@ -36,8 +36,15 @@
             </ul>
         </nav>
     </header>
-    <header>
-    </header>
+    <main>
+        <hgroup>
+            <h1>Submissions:</h1>
+            <h2>
+                <ul id="subbox">
+                </ul>
+            </h2>
+        </hgroup>
+    </main>
     <script type="module">
         import {net} from "./net.js"
         const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -55,6 +62,11 @@
                         $("#boardname").text(doc.name)
                     }
                 });
+                $( "#boardid" ).attr( "aria-busy", "false" )
+                $("#boardid").text("✅ HBN Status: Connected")
+            } else if (status.status == "failedinit"){
+                $( "#boardid" ).attr( "aria-busy", "false" )
+                $("#boardid").text("❌ HBN Status: Failed To Connect")
             }
         }})
     </script>
