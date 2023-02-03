@@ -78,6 +78,16 @@
                     }
                 })
 
+                board.formDB.changes().on('change', function() {
+                    $('#subbox').empty()
+                    board.formDB.allDocs({include_docs: true}).then(function(result) {
+                        result.rows.forEach(function(row) {
+                            console.log(row)
+                            $('#subbox').append('<li><a target="_blank" href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                        });
+                    });
+                });
+
                 $( "#netstatus" ).attr( "aria-busy", "false" )
                 $("#netstatus").text("✅ HBN Status: Connected")
 
