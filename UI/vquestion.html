@@ -57,7 +57,7 @@
 
         function deleteEntry(){
             formDB.get(qid).then(function(doc) {
-                return db.remove(doc);
+                return formDB.remove(doc);
             }).then(function (result) {
                 alert("Successfully deleted this question!")
                 window.close()
