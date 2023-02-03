@@ -18,15 +18,15 @@ const formHandler = function(netObj, cb){
             ${submitionID}`
         )
 
-        await netObj.formDB.put({
+        netObj.formDB.put({
             _id: submitionID,
             submiterName: submiterName,
             submiterId: submiterId,
             formData: formData,
             submitionDate: submitionDate,
+        }).then(function(){
+            cb({message: "datasubmit"})
         })
-
-        cb({message: "datasubmit"})
     })
 }
 
