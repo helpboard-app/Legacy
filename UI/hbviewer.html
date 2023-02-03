@@ -41,9 +41,9 @@
         <hgroup>
             <h1>Submissions:</h1>
             <h2>
-              Submissions are sorted by newest to oldest.
                 <ul id="subbox">
                 </ul>
+                Submissions are sorted by newest to oldest.
             </h2>
         </hgroup>
     </main>
@@ -72,7 +72,7 @@
                         board.formDB.allDocs({include_docs: true}).then(function(result) {
                             result.rows.forEach(function(row) {
                                 console.log(row)
-                                $('#subbox').append('<li><a target="_blank" href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                                $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                             });
                         });
                     }
@@ -83,7 +83,7 @@
                     board.formDB.allDocs({include_docs: true}).then(function(result) {
                         result.rows.forEach(function(row) {
                             console.log(row)
-                            $('#subbox').append('<li><a target="_blank" href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                            $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                         });
                     });
                 });
@@ -94,7 +94,7 @@
                 board.formDB.allDocs({include_docs: true}).then(function(result) {
                     result.rows.forEach(function(row) {
                         console.log(row)
-                        $('#subbox').append('<li><a target="_blank" href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                        $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                     });
                 });
             } else if (status.status == "failedinit"){

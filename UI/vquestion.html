@@ -41,7 +41,7 @@
            </div>
            <div class="grid">
               <button onclick="deleteEntry()" style="text-align: center">Delete</button>
-              <button onclick="window.close()" style="text-align: center">Close</button>
+              <button onclick="history.back()" style="text-align: center">Close</button>
            </div>
         </hgroup>
     </header>
@@ -59,7 +59,7 @@
                 return formDB.remove(doc);
             }).then(function (result) {
                 alert("Successfully deleted this question!")
-                window.close()
+                history.back()
             }).catch(function (err) {
                 console.log(err);
                 alert(JSON.stringify(err))
