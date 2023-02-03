@@ -1,4 +1,4 @@
-const formHandler = function(netObj){
+const formHandler = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
     netObj.formDB = new PouchDB('formDB' + netObj.boardid);
     
@@ -18,13 +18,15 @@ const formHandler = function(netObj){
             ${submitionID}`
         )
 
-        netObj.formDB.put({
+        await netObj.formDB.put({
             _id: submitionID,
             submiterName: submiterName,
             submiterId: submiterId,
             formData: formData,
             submitionDate: submitionDate,
-        });
+        })
+
+        cb({message: "datasubmit"})
     })
 }
 

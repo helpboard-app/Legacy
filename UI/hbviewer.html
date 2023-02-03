@@ -64,7 +64,16 @@
                     }
                 });
                 
-                var formHandle = new formHandler(board)
+                var formHandle = new formHandler(board, function(status){
+                    if (status.message == "datasubmit"){
+                        board.formDB.allDocs({include_docs: true}).then(function(result) {
+                            result.rows.forEach(function(row) {
+                                console.log(row)
+                                $('#subbox').append('<li>' + row.doc.submiterName + " | " + row.doc._id + '</li>');
+                            });
+                        });
+                    }
+                })
 
                 $( "#netstatus" ).attr( "aria-busy", "false" )
                 $("#netstatus").text("✅ HBN Status: Connected")
