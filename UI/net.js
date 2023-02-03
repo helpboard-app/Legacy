@@ -15,7 +15,10 @@ const net = {
         this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
 
         const [sendTrigger, handleTrigger] = this.network.makeAction('adminTrigger')
-        this.network.onPeerJoin(peerId => sendTrigger({test: "send future data here"}, peerId))
+        this.network.onPeerJoin(peerId => {
+            console.log(`sent action trigger to ${peerId}`)
+            sendTrigger({test: "send future data here"}, peerId)
+        })
         
 
         this.boardsdb.get(boardid.toString()).then(function (doc) {
