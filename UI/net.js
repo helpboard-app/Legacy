@@ -14,12 +14,9 @@ const net = {
         this.network.onPeerJoin(peerId => console.log(`${peerId} joined`))
         this.network.onPeerLeave(peerId => console.log(`${peerId} left`))
 
-        const [sendClmsg, getClmsg] = this.network.makeAction('clmsg')
-        getClmsg((data, peerId) =>
-            console.log(
-                `${peerId}: ${data}`
-            )
-        )
+        const [sendTrigger, handleTrigger] = this.network.makeAction('adminTrigger')
+        this.network.onPeerJoin(peerId => sendTrigger({test: "send future data here"}, peerId))
+        
 
         this.boardsdb.get(boardid.toString()).then(function (doc) {
             cb({status: "initalized"})
@@ -46,7 +43,14 @@ const net = {
         }
         this.network = joinRoom(baseConfig, boardid.toString())
         this.boardid = boardid
-        cb({status: "initalized"})
+        this.connectedToAdmin = false
+        this.adminPeerID = null
+        const [sendTrigger, handleTrigger] = this.network.makeAction('adminTrigger')
+        handleTrigger((data, peerId) => {
+            this.connectedToAdmin = true
+            this.adminPeerID = peerId
+            cb({status: "initalized"})
+        })
     }
 }
 
