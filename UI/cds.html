@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpboard Legacy | Viewer</title>
+    <!-- All Code Below Should Be Mirrored Across All Pages -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"
+        integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonform/2.2.5/jsonform.js"
+        integrity="sha512-7+/iHAMg7Yn0B7v6kbWoZYGstHvUeehAe0Rd77bndsvA0jk5z7fQt0qagSyvCRrr6pCBVDUUZlIXlcVhSv2l6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/openpgp@latest/dist/openpgp.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.0/dist/pouchdb.min.js"></script>
+    <!-- Ends here -->
+    <script src="https://rawcdn.githack.com/picocss/pico/08da409d0758dd1807783a938e4e202445f30033/docs/js/modal.js"></script>
+</head>
+
+<body>
+    <header>
+        <hgroup>
+            <h1 id="boardid" style="text-align: center;"></h1>
+            <div id="netstatus" aria-busy="true" style="text-align: center;">HBN Status: Connecting</div>
+            <h2 style="text-align: center;">Helpboard Legacy Build L1.0.1</h2>
+        </hgroup>
+    </header>
+    <main>
+        <hgroup style="text-align: center;">
+            <h1>Submissions:</h1>
+            <h2>
+                <ul id="subbox">
+                </ul>
+                Submissions are sorted by newest to oldest.
+            </h2>
+        </hgroup>
+    </main>
+    <script type="module">
+        import {net} from "./net.js"
+        import {formHandler} from "./formHandle.js"
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        $('#subbox').empty()
+        $("#boardid").text("Board ID: " + params.b.toString())
+
+        var board = new net.Board({boardid: params.b, cb: function(status){
+            if(status.status == "initalized"){
+                
+                var formHandle = new formHandler(board, function(status){
+                    if (status.message == "datasubmit"){
+                        $('#subbox').empty()
+                        board.formDB.allDocs({include_docs: true}).then(function(result) {
+                            result.rows.forEach(function(row) {
+                                console.log(row)
+                                $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                            });
+                        });
+                    }
+                })
+
+                $( "#netstatus" ).attr( "aria-busy", "false" )
+                $("#netstatus").text("✅ HBN Status: Connected")
+
+                board.formDB.allDocs({include_docs: true}).then(function(result) {
+                    $('#subbox').empty()
+                    result.rows.forEach(function(row) {
+                        console.log(row)
+                        $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                    });
+                });
+            } else if (status.status == "failedinit"){
+                $( "#netstatus" ).attr( "aria-busy", "false" )
+                $("#netstatus").text("❌ HBN Status: Failed To Connect")
+            }
+        }})
+    </script>
+</body>
+
+</html>
