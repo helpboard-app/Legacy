@@ -82,8 +82,8 @@
                 $("#netstatus").text("✅ HBN Status: Connected")
 
                 board.formDB.allDocs({include_docs: true}).then(function(result) {
+                    $('#subbox').empty()
                     result.rows.forEach(function(row) {
-                        $('#subbox').empty()
                         console.log(row)
                         $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                     });
