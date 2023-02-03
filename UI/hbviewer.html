@@ -66,6 +66,7 @@
                 
                 var formHandle = new formHandler(board, function(status){
                     if (status.message == "datasubmit"){
+                        $('#subbox').empty()
                         board.formDB.allDocs({include_docs: true}).then(function(result) {
                             result.rows.forEach(function(row) {
                                 console.log(row)
