@@ -48,17 +48,17 @@ const formRenderer = function(netObj){
     this.renderResponse = function(submitionID, containerElement){
         netObj.formDB.get(submitionID).then(function (doc) {
             var jsonData = doc.formData
-            var ul = containerElement
+            var div = containerElement
 
             // Iterate through the JSON object
             for (var key in jsonData) {
                 if (jsonData.hasOwnProperty(key)) {
-                    // Create a new li element
-                    var li = document.createElement("li");
-                    // Set the li text to the value of the current key
-                    li.innerHTML = key + ": " + jsonData[key];
-                    // Append the li to the ul
-                    ul.appendChild(li);
+                    // Create a new p element
+                    var p = document.createElement("p");
+                    // Set the p text to the value of the current key
+                    p.innerHTML = key + ": " + jsonData[key];
+                    // Append the p to the div
+                    div.appendChild(p);
                 }
             }
         }).catch(function (err) {
