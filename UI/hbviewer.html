@@ -53,7 +53,7 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-
+        $('#subbox').empty()
         $("#boardid").text("Board ID: " + params.b.toString())
 
         var board = new net.Board({boardid: params.b, cb: function(status){
@@ -78,21 +78,12 @@
                     }
                 })
 
-                board.formDB.changes().on('change', function() {
-                    $('#subbox').empty()
-                    board.formDB.allDocs({include_docs: true}).then(function(result) {
-                        result.rows.forEach(function(row) {
-                            console.log(row)
-                            $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
-                        });
-                    });
-                });
-
                 $( "#netstatus" ).attr( "aria-busy", "false" )
                 $("#netstatus").text("✅ HBN Status: Connected")
 
                 board.formDB.allDocs({include_docs: true}).then(function(result) {
                     result.rows.forEach(function(row) {
+                        $('#subbox').empty()
                         console.log(row)
                         $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                     });
