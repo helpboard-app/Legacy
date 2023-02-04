@@ -50,10 +50,11 @@
         $("#setName").click(function(){
             var db = new PouchDB('boards')
             var bdb = new PouchDB('board' + params.b);
+            var name = prompt("What is the new name for the board:") || "No Name Set"
 
             bdb.put({
                 _id: params.b.toString(),
-                name: prompt("What is the new name for the board:")
+                name: name
             }).then(function (response) {
                 alert("The board name has been set!")
             }).catch(function (err) {
