@@ -65,16 +65,19 @@
             var bdb = new PouchDB('board' + params.b);
 
             bdb.destroy().then(function (response) {
-                db.get(params.b.toString()).then(function(doc) {
-                    return db.remove(doc);
-                }).then(function (result) {
-                    alert('Board Deleted!')
-                }).catch(function (err) {
-                    console.log(err);
-                });
+
             }).catch(function (err) {
                 console.log(err);
                 alert(err)
+            });
+
+            db.get(params.b.toString()).then(function(doc) {
+                    return db.remove(doc);
+                }).then(function (result) {
+                    alert('Board Deleted!')
+                    window.location.href = "./app.html"
+                }).catch(function (err) {
+                    console.log(err);
             });
         });
      </script>
