@@ -33,7 +33,7 @@
             <ul>
                 <li><a href="./app.html" role="button">Home</a></li>
                 <li><a href="./cds.html" role="button" id="cds">Classroom Display</a></li>
-                <li><a href="#" role="button">Helpboard Settings</a></li>
+                <li><a href="#" role="button" id="hbsettings">Helpboard Settings</a></li>
             </ul>
         </nav>
     </header>
@@ -56,6 +56,7 @@
         $('#subbox').empty()
         $("#boardid").text("Board ID: " + params.b.toString())
         $("#cds").attr("href", "./cds.html?b=" + params.b)
+        $("#hbsettings").attr("href", "./hbsettings.html?b=" + params.b)
 
         var board = new net.Board({boardid: params.b, cb: function(status){
             if(status.status == "initalized"){
