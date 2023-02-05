@@ -82,6 +82,7 @@
                 ],
                 onSubmit: function(errors, values) {
                     $("[value='Connect']").prop("disabled", true);
+                    $( "#console" ).empty();
                     if (errors) {
                         $( "#console" ).append('<div>❌ Client Side Error Submitting Form!</div>');
                     } else {
@@ -105,6 +106,7 @@
                                         $("#formsubmit").attr("aria-busy", "false")
                                         client.network.leave()
                                         form = null
+                                        $("[value='Connect']").prop("disabled", false);
                                     }
                                 });
 
@@ -117,6 +119,7 @@
                                         $("#formsubmit").attr("aria-busy", "false")
                                         client.network.leave()
                                         form = null
+                                        $("[value='Connect']").prop("disabled", false);
                                     }
                                 }, "60000")
                             }
