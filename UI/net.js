@@ -25,13 +25,20 @@ const net = {
             cb({status: "initalized"})
           }).catch(function (err) {
             var boardsdb = new PouchDB('boards');
+            var db = new PouchDB('board' + boardid);
             if (err.status === 404) {
                 boardsdb.put({
                     _id: boardid.toString(),
                     boardID: boardid.toString(),
                     name: name,
                 }).then(function (doc) {
-                    cb({status: "initalized"})
+                    db.put({
+                        _id: "manageboard",
+                        boardID: boardid.toString(),
+                        name: name,
+                    }).then(function (doc) {
+                        cb({status: "initalized"})
+                    })
                 })
             } else {
               console.log('Error checking for document:', err);
