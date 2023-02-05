@@ -104,14 +104,12 @@
             var bdb = new PouchDB('board' + params.b);
             bdb.get('manageboard').then(function(doc) {
                 if(doc.socreq == true){
-                    alert("Toggled Social ID to false from true.")
                     return bdb.put({
                         _id: 'manageboard',
                         _rev: doc._rev,
                         socreq: false
                     });
                 } else if(doc.socreq == false){
-                    alert("Toggled Social ID to true from false.")
                     return bdb.put({
                         _id: 'manageboard',
                         _rev: doc._rev,
