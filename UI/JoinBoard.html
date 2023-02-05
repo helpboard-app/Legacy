@@ -81,10 +81,9 @@
                     }
                 ],
                 onSubmit: function(errors, values) {
+                    $("[value='Connect']").prop("disabled", true);
                     if (errors) {
                         $( "#console" ).append('<div>❌ Client Side Error Submitting Form!</div>');
-                        $("[value='Connect']").attr("aria-busy", "false")
-                        $("[value='Connect']").prop("disabled", false);
                     } else {
                         $( "#console" ).append('<div id="netstatus" aria-busy="true">Connecting to the Helpboard Network...</div>');
                         var client = new net.Client({boardid: values.id, cb: function(status){
