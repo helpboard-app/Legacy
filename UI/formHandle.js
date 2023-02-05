@@ -11,7 +11,7 @@ const formHandler = function(netObj, cb){
         cb = function(){}
     }
 
-    netobj.db.get('manageboard').then(function (doc) {
+    netObj.db.get('manageboard').then(function (doc) {
         this.socreq = doc.socreq
     }).catch(function (err) {
         console.log(err);
