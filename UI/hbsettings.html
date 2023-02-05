@@ -51,9 +51,9 @@
             var db = new PouchDB('boards')
             var bdb = new PouchDB('board' + params.b);
             var name = prompt("What is the new name for the board:") || "No Name Set"
-            
-            bdb.get(params.b.toString()).then(function(doc) {
-                return bdb.put({
+
+            db.get(params.b.toString()).then(function(doc) {
+                return db.put({
                     _id: params.b.toString(),
                     _rev: doc._rev,
                     name: name
