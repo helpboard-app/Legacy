@@ -1,8 +1,13 @@
 const formHandler = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
     const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
+    const [sendMeta, getMeta] = netObj.network.makeAction('meta')
     netObj.formDB = new PouchDB('formDB' + netObj.boardid);
     
+    if(!cb){
+        cb = function(){}
+    }
+
     getForm((data, peerId) =>{
         var submiterName = data.name
         var submitionDate = data.submitionDate
@@ -38,6 +43,10 @@ const formHandler = function(netObj, cb){
 const formSubmitter = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
     const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
+
+    if(!cb){
+        cb = function(){}
+    }
 
     getSuccess((data, peerId) => {
         if(data == "formsubmitsuccess"){

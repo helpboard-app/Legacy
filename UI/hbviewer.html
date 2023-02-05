@@ -74,7 +74,7 @@
                         board.formDB.allDocs({include_docs: true}).then(function(result) {
                             result.rows.forEach(function(row) {
                                 console.log(row)
-                                $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                                $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                             });
                         });
                     }
@@ -87,7 +87,7 @@
                     $('#subbox').empty()
                     result.rows.forEach(function(row) {
                         console.log(row)
-                        $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '"">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
+                        $('#subbox').append('<li><a href="' + "/vquestion.html?b=" + params.b + "&q=" + row.doc._id + '">' + row.doc.submiterName + " | " + row.doc._id + '</a></li>');
                     });
                 });
             } else if (status.status == "failedinit"){
