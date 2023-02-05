@@ -37,6 +37,7 @@
            <p style="text-align: center">Build L1.0.1</p>
            <div class="grid">
               <button style="text-align: center" id="deleteBoard">Delete Board</button>
+              <button style="text-align: center" id="togSocialID">Toggle SocialID</button>
               <button style="text-align: center" id="deleteAllRespond">Delete All Responses</button>
               <button style="text-align: center" id="setName">Set Name</button>
               <button style="text-align: center" onclick="history.back()">Go Back</button>
@@ -96,6 +97,32 @@
             }).catch(function (err) {
                 console.log(err);
                 alert(err)
+            });
+        });
+
+        $( "#togSocialID" ).click(function() {
+            var bdb = new PouchDB('board' + params.b);
+            bdb.get('manageboard').then(function(doc) {
+                if(doc.socreq == true){
+                    alert("Toggled Social ID to false from true.")
+                    return bdb.put({
+                        _id: 'manageboard',
+                        _rev: doc._rev,
+                        socreq: false
+                    });
+                } else if(doc.socreq == false){
+                    alert("Toggled Social ID to true from false.")
+                    return bdb.put({
+                        _id: 'manageboard',
+                        _rev: doc._rev,
+                        socreq: true
+                    });
+                }
+            }).then(function(response) {
+                alert("success")
+            }).catch(function (err) {
+                alert("error")
+                console.log(err);
             });
         });
      </script>

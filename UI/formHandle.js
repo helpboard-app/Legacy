@@ -2,11 +2,24 @@ const formHandler = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
     const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
     const [sendMeta, getMeta] = netObj.network.makeAction('meta')
+
+    this.socreq = false
+
     netObj.formDB = new PouchDB('formDB' + netObj.boardid);
     
     if(!cb){
         cb = function(){}
     }
+
+    netobj.db.get('manageboard').then(function (doc) {
+        this.socreq = doc.socreq
+    }).catch(function (err) {
+        console.log(err);
+    });
+
+    getMeta((data, peerId) => {
+        sendMeta({socreq: this.socreq}, peerId)
+    })    
 
     getForm((data, peerId) =>{
         var submiterName = data.name
@@ -43,10 +56,21 @@ const formHandler = function(netObj, cb){
 const formSubmitter = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
     const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
+    const [sendMeta, getMeta] = netObj.network.makeAction('meta')
 
     if(!cb){
         cb = function(){}
     }
+
+    sendMeta("", netObj.adminPeerID)
+
+    getMeta((data, peerId) => {
+        if(data.socreq == true){
+            cb({status: "socialidrequired"})
+        } else {
+            cb({status: "ready"})
+        }
+    }) 
 
     getSuccess((data, peerId) => {
         if(data == "formsubmitsuccess"){
