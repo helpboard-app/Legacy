@@ -63,8 +63,8 @@ const formSubmitter = function(netObj, cb){
         cb = function(){}
     }
 
-    sendMeta("", netObj.adminPeerID)
-    console("requested meta from " + netObj.adminPeerID)
+    sendMeta("nodata", netObj.adminPeerID)
+    console.log("requested meta from " + netObj.adminPeerID)
 
     getMeta((data, peerId) => {
         if(data.socreq == true){
