@@ -3,7 +3,7 @@ const formHandler = function(netObj, cb){
     const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
     const [sendMeta, getMeta] = netObj.network.makeAction('meta')
 
-    this.socreq = false
+    var socreq = false
 
     netObj.formDB = new PouchDB('formDB' + netObj.boardid);
     
@@ -12,13 +12,13 @@ const formHandler = function(netObj, cb){
     }
 
     netObj.db.get('manageboard').then(function (doc) {
-        this.socreq = doc.socreq
+        socreq = doc.socreq
     }).catch(function (err) {
         console.log(err);
     });
 
     getMeta((data, peerId) => {
-        sendMeta({socreq: this.socreq}, peerId)
+        sendMeta({socreq: socreq}, peerId)
     })    
 
     getForm((data, peerId) =>{
