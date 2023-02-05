@@ -132,6 +132,7 @@
                                         form = null
                                         $("[value='Connect']").prop("disabled", false);
                                     } else if(status.status == "socialidrequired"){
+                                        clearTimeout(saveback)
                                         $("#console").append('<div>Social ID Required. Sign in below to continue.</div>');
                                         $("#console").append('<button id="googleSignInButton">Sign in with Google</button>');
                                         // Get the sign-in button
@@ -152,9 +153,20 @@
                                                 console.log("Name: " + name);
                                                 console.log("Email: " + email);
 
+                                                $("#console").empty();
                                                 $("#console").append('<div>Signed in as ' + name + ' (' + email + ')</div>');
 
                                                 form.submit(name, {Question: values.yq, Email: email})
+                                                setTimeout(() => {
+                                                    if(form.success != true){
+                                                        $( "#console" ).empty();
+                                                        $( "#console" ).append('<div>❌ Error Submitting Form! Timed Out!</div>');
+                                                        $("#formsubmit").attr("aria-busy", "false")
+                                                        client.network.leave()
+                                                        form = null
+                                                        $("[value='Connect']").prop("disabled", false);
+                                                    }
+                                                }, "60000")
                                             }).catch(function(error) {
                                                 // Handle Errors here.
                                                 var errorCode = error.code;
