@@ -1,5 +1,6 @@
 const formHandler = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
+    const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
     netObj.formDB = new PouchDB('formDB' + netObj.boardid);
     
     getForm((data, peerId) =>{
@@ -10,7 +11,7 @@ const formHandler = function(netObj, cb){
         var submitionID = Math.floor(100000000 + Math.random() * 900000000).toString()
 
         console.log(
-            `${peerId} sent form:
+            `   ${peerId} sent form:
             ${submiterName}
             ${submitionDate}
             ${submiterId}
@@ -26,12 +27,26 @@ const formHandler = function(netObj, cb){
             submitionDate: submitionDate,
         }).then(function(){
             cb({message: "datasubmit"})
+            sendSuccess("formsubmitsuccess", peerId)
+        }).catch(function (err) {
+            console.log(err)
+            sendSuccess("formsubmitfail", peerId)
         })
     })
 }
 
-const formSubmitter = function(netObj){
+const formSubmitter = function(netObj, cb){
     const [submitForm, getForm] = netObj.network.makeAction('form')
+    const [sendSuccess, getSuccess] = netObj.network.makeAction('sigsuccess')
+
+    getSuccess((data, peerId) => {
+        if(data == "formsubmitsuccess"){
+            this.success = true
+        } else {
+            this.success = false
+        }
+        cb({status: data})
+    })
     
     this.submit = function(submiterName, formData){
         submitForm({

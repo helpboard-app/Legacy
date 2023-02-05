@@ -34,10 +34,12 @@
         </nav>
         <hgroup>
             <form id="jhb"></form>
-            <div id="res"></div>
+            <div id="console"></div>
         </hgroup>
     </header>
     <script type="module">
+            import {net} from "./net.js"
+            import {formSubmitter} from "./formHandle.js"
             $('#jhb').jsonForm({
                 schema: {
                     fname: {
@@ -75,10 +77,53 @@
                     }
                 ],
                 onSubmit: function(errors, values) {
+                    $("[value='Connect']").attr("aria-busy", "true")
+                    $("[value='Connect']").prop("disabled", true);
                     if (errors) {
-                        $('#res').html('<p>I beg your pardon?</p>');
+                        $( "#console" ).append('<div>❌ Client Side Error Submitting Form!</div>');
+                        $("[value='Connect']").attr("aria-busy", "false")
+                        $("[value='Connect']").prop("disabled", false);
                     } else {
-                        $('#res').html('<p>' + JSON.stringify(values) + '</p>');
+                        $( "#console" ).append('<div id="netstatus" aria-busy="true">Connecting to the Helpboard Network...</div>');
+                        var client = new net.Client({boardid: values.id, cb: function(status){
+                            if(status.status == "initalized"){
+                                $( "#console" ).empty();
+                                $( "#console" ).append('<div id="netstatus" aria-busy="false">HBN Status: Connected</div>');
+                                $( "#console" ).append('<div>Successfully connected to the Helpboard Network using id: ' + values.id.toString() + '</div>');
+                                $( "#console" ).append('<div id="formsubmit" aria-busy="true">Submitting Form</div>');
+
+                                var form = new formSubmitter(client, function(status){
+                                    if(status == "formsubmitsuccess"){
+                                        $("#formsubmit").attr("aria-busy", "false")
+                                        $("#console").append('<div>✅ Form Submitted Successfully</div>');
+                                        $("[value='Connect']").prop("disabled", false);
+                                        $("[value='Connect']").attr("aria-busy", "false")
+                                    } else if(status == "formsubmitfail"){
+                                        $("#console").append('<div>❌ Server Side Error Submitting Form!</div>');
+                                        $("[value='Connect']").attr("aria-busy", "false")
+                                        $("#formsubmit").attr("aria-busy", "false")
+                                        $("[value='Connect']").prop("disabled", false);
+                                    }
+                                });
+
+                                setTimeout(() => {
+                                    if(form.success != true){
+                                        $( "#console" ).empty();
+                                        $( "#console" ).append('<div>❌ Error Submitting Form! Timed Out!</div>');
+                                        form = null
+                                    }
+                                }, "60000")
+                            }
+                        }})
+
+                        setTimeout(() => {
+                            if(client.connectedToAdmin == false){
+                                $( "#console" ).empty();
+                                $( "#console" ).append('<div id="netstatus" aria-busy="false">HBN Status: Disconnected</div>');
+                                $( "#console" ).append('<div>❌ Connection to the HBN timed out! Please try again!</div>');
+                                client = null
+                            }
+                        }, "60000")
                     }
                 }
             });
