@@ -97,9 +97,14 @@
                                     if(status.status == "formsubmitsuccess"){
                                         $("#formsubmit").attr("aria-busy", "false")
                                         $("#console").append('<div>✅ Form Submitted Successfully</div>');
+                                        client.network.leave()
+                                        form = null
+                                        $("[value='Connect']").prop("disabled", false);
                                     } else if(status.status == "formsubmitfail"){
                                         $("#console").append('<div>❌ Server Side Error Submitting Form!</div>');
                                         $("#formsubmit").attr("aria-busy", "false")
+                                        client.network.leave()
+                                        form = null
                                     }
                                 });
 
@@ -110,6 +115,7 @@
                                         $( "#console" ).empty();
                                         $( "#console" ).append('<div>❌ Error Submitting Form! Timed Out!</div>');
                                         $("#formsubmit").attr("aria-busy", "false")
+                                        client.network.leave()
                                         form = null
                                     }
                                 }, "60000")
@@ -122,7 +128,8 @@
                                 $( "#console" ).append('<div id="netstatus" aria-busy="false">HBN Status: Disconnected</div>');
                                 $( "#console" ).append('<div>❌ Connection to the HBN timed out! Please try again!</div>');
                                 $("#formsubmit").attr("aria-busy", "false")
-                                client = null
+                                client.network.leave()
+                                form = null
                             }
                         }, "60000")
                     }
