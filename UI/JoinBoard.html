@@ -164,6 +164,7 @@
                                                 // The firebase.auth.AuthCredential type that was used.
                                                 var credential = error.credential;
                                                 console.log(errorCode + ": " + errorMessage);
+                                                $("#console").empty();
                                                 $("#console").append('<div>❌ Social ID Error. Please try again later.</div>');
                                                 client.network.leave()
                                                 form = null
