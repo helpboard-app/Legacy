@@ -40,6 +40,9 @@
     <script type="module">
             import {net} from "./net.js"
             import {formSubmitter} from "./formHandle.js"
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
             $('#jhb').jsonForm({
                 schema: {
                     fname: {
@@ -56,7 +59,8 @@
                     },
                     yq: {
                         type: "string",
-                        title: "Your Question"
+                        title: "Your Question",
+                        default: params.i || null
                     }
                 },
                 form: [{
@@ -77,8 +81,6 @@
                     }
                 ],
                 onSubmit: function(errors, values) {
-                    $("[value='Connect']").attr("aria-busy", "true")
-                    $("[value='Connect']").prop("disabled", true);
                     if (errors) {
                         $( "#console" ).append('<div>❌ Client Side Error Submitting Form!</div>');
                         $("[value='Connect']").attr("aria-busy", "false")
@@ -96,13 +98,9 @@
                                     if(status.status == "formsubmitsuccess"){
                                         $("#formsubmit").attr("aria-busy", "false")
                                         $("#console").append('<div>✅ Form Submitted Successfully</div>');
-                                        $("[value='Connect']").prop("disabled", false);
-                                        $("[value='Connect']").attr("aria-busy", "false")
                                     } else if(status.status == "formsubmitfail"){
                                         $("#console").append('<div>❌ Server Side Error Submitting Form!</div>');
-                                        $("[value='Connect']").attr("aria-busy", "false")
                                         $("#formsubmit").attr("aria-busy", "false")
-                                        $("[value='Connect']").prop("disabled", false);
                                     }
                                 });
 
@@ -112,9 +110,7 @@
                                     if(form.success != true){
                                         $( "#console" ).empty();
                                         $( "#console" ).append('<div>❌ Error Submitting Form! Timed Out!</div>');
-                                        $("[value='Connect']").attr("aria-busy", "false")
                                         $("#formsubmit").attr("aria-busy", "false")
-                                        $("[value='Connect']").prop("disabled", false);
                                         form = null
                                     }
                                 }, "60000")
@@ -126,9 +122,7 @@
                                 $( "#console" ).empty();
                                 $( "#console" ).append('<div id="netstatus" aria-busy="false">HBN Status: Disconnected</div>');
                                 $( "#console" ).append('<div>❌ Connection to the HBN timed out! Please try again!</div>');
-                                $("[value='Connect']").attr("aria-busy", "false")
                                 $("#formsubmit").attr("aria-busy", "false")
-                                $("[value='Connect']").prop("disabled", false);
                                 client = null
                             }
                         }, "60000")
