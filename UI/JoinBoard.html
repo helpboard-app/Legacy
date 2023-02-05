@@ -28,7 +28,7 @@
         </hgroup>
         <nav>
             <ul>
-                <li><a onclick="history.back()" role="button">Go Back</a></li>
+                <li><button onclick="history.back()" role="button">Go Back</button></li>
                 <li><a href="./settings.html" role="button">Settings</a></li>
             </ul>
         </nav>
@@ -40,54 +40,50 @@
         </hgroup>
     </header>
     <script type="text/javascript">
-        $('#jhb').jsonForm({
-          schema: JSON.parse(`{
-                "schema": {
-                "fname": {
-                    "type": "string",
-                    "title": "First Name"
+            $('#jhb').jsonForm({
+                schema: {
+                    fname: {
+                        type: "string",
+                        title: "First Name"
+                    },
+                    lname: {
+                        type: "string",
+                        title: "Last Name"
+                    },
+                    id: {
+                        type: "number",
+                        title: "Your Helpboard ID"
+                    },
+                    yq: {
+                        type: "string",
+                        title: "Your Question"
+                    }
                 },
-                "lname": {
-                    "type": "string",
-                    "title": "Last Name"
-                },
-                "id": {
-                    "type": "number",
-                    "title": "Your Helpboard ID"
-                },
-                "yq": {
-                    "type": "string",
-                    "title": "Your Question"
+                form: [{
+                        key: "fname"
+                    },
+                    {
+                        key: "lname"
+                    },
+                    {
+                        key: "yq"
+                    },
+                    {
+                        key: "id"
+                    },
+                    {
+                        type: "submit",
+                        title: "Connect"
+                    }
+                ],
+                onSubmit: function(errors, values) {
+                    if (errors) {
+                        $('#res').html('<p>I beg your pardon?</p>');
+                    } else {
+                        $('#res').html('<p>' + JSON.stringify(values) + '</p>');
+                    }
                 }
-                },
-                "form": [
-                {
-                    "key": "fname"
-                },
-                {
-                    "key": "lname"
-                },
-                {
-                    "key": "yq"
-                },
-                {
-                    "key": "id"
-                },
-                {
-                    "type": "submit",
-                    "title": "Connect"
-                }
-                ]
-            }`),
-          onSubmit: function (errors, values) {
-            if (errors) {
-              $('#res').html('<p>I beg your pardon?</p>');
-            }
-            else {
-              $('#res').html('<p>' + JSON.stringify(values) +'</p>');
-            }
-          }
-        });
+            });
       </script>
 </body>
 
