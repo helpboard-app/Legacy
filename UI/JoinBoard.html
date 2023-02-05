@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpboard Legacy | Join Board</title>
+    <!-- All Code Below Should Be Mirrored Across All Pages -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"
+        integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsonform/2.2.5/jsonform.js"
+        integrity="sha512-7+/iHAMg7Yn0B7v6kbWoZYGstHvUeehAe0Rd77bndsvA0jk5z7fQt0qagSyvCRrr6pCBVDUUZlIXlcVhSv2l6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/openpgp@latest/dist/openpgp.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.0/dist/pouchdb.min.js"></script>
+    <!-- Ends here -->
+</head>
+
+<body>
+    <header>
+        <hgroup>
+            <h1>Join Board</h1>
+            <h2>Helpbard Legacy Build L1.0.1</h2>
+        </hgroup>
+        <nav>
+            <ul>
+                <li><a onclick="history.back()" role="button">Go Back</a></li>
+                <li><a href="./settings.html" role="button">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    <header>
+        <hgroup>
+            <form id="jhb"></form>
+            <div id="res"></div>
+        </hgroup>
+    </header>
+    <script type="text/javascript">
+        $('#jhb').jsonForm({
+          schema: JSON.parse(`{
+                "schema": {
+                "fname": {
+                    "type": "string",
+                    "title": "First Name"
+                },
+                "lname": {
+                    "type": "string",
+                    "title": "Last Name"
+                },
+                "id": {
+                    "type": "number",
+                    "title": "Your Helpboard ID"
+                },
+                "yq": {
+                    "type": "string",
+                    "title": "Your Question"
+                }
+                },
+                "form": [
+                {
+                    "key": "fname"
+                },
+                {
+                    "key": "lname"
+                },
+                {
+                    "key": "yq"
+                },
+                {
+                    "key": "id"
+                },
+                {
+                    "type": "submit",
+                    "title": "Connect"
+                }
+                ]
+            }`),
+          onSubmit: function (errors, values) {
+            if (errors) {
+              $('#res').html('<p>I beg your pardon?</p>');
+            }
+            else {
+              $('#res').html('<p>' + JSON.stringify(values) +'</p>');
+            }
+          }
+        });
+      </script>
+</body>
+
+</html>
