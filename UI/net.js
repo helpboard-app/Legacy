@@ -36,6 +36,7 @@ const net = {
                         _id: "manageboard",
                         boardID: boardid.toString(),
                         name: name,
+                        socreq: false
                     }).then(function (doc) {
                         cb({status: "initalized"})
                     })
