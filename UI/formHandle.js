@@ -10,8 +10,6 @@ const formHandler = function(netObj, cb){
         var formData = data.formData
         var submitionID = Math.floor(100000000 + Math.random() * 900000000).toString()
 
-        sendSuccess("formsubmitsuccess", peerId)
-
         console.log(
             `   ${peerId} sent form:
             ${submiterName}
@@ -28,8 +26,10 @@ const formHandler = function(netObj, cb){
             formData: formData,
             submitionDate: submitionDate,
         }).then(function(){
+            sendSuccess("formsubmitsuccess", peerId)
             cb({message: "datasubmit"})
         }).catch(function (err) {
+            sendSuccess("formsubmitfail", peerId)
             console.log(err)
         })
     })

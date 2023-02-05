@@ -93,12 +93,12 @@
                                 $( "#console" ).append('<div id="formsubmit" aria-busy="true">Submitting Form</div>');
 
                                 var form = new formSubmitter(client, function(status){
-                                    if(status == "formsubmitsuccess"){
+                                    if(status.status == "formsubmitsuccess"){
                                         $("#formsubmit").attr("aria-busy", "false")
                                         $("#console").append('<div>✅ Form Submitted Successfully</div>');
                                         $("[value='Connect']").prop("disabled", false);
                                         $("[value='Connect']").attr("aria-busy", "false")
-                                    } else if(status == "formsubmitfail"){
+                                    } else if(status.status == "formsubmitfail"){
                                         $("#console").append('<div>❌ Server Side Error Submitting Form!</div>');
                                         $("[value='Connect']").attr("aria-busy", "false")
                                         $("#formsubmit").attr("aria-busy", "false")
