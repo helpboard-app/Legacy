@@ -106,6 +106,8 @@
                                     }
                                 });
 
+                                form.submit(values.fname + " " + values.lname, {Question: values.yq})
+
                                 setTimeout(() => {
                                     if(form.success != true){
                                         $( "#console" ).empty();
