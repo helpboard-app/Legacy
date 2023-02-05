@@ -26,11 +26,11 @@ const formHandler = function(netObj, cb){
             formData: formData,
             submitionDate: submitionDate,
         }).then(function(){
-            cb({message: "datasubmit"})
             sendSuccess("formsubmitsuccess", peerId)
+            cb({message: "datasubmit"})
         }).catch(function (err) {
-            console.log(err)
             sendSuccess("formsubmitfail", peerId)
+            console.log(err)
         })
     })
 }
