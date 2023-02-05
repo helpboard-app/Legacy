@@ -110,6 +110,9 @@
                                     if(form.success != true){
                                         $( "#console" ).empty();
                                         $( "#console" ).append('<div>❌ Error Submitting Form! Timed Out!</div>');
+                                        $("[value='Connect']").attr("aria-busy", "false")
+                                        $("#formsubmit").attr("aria-busy", "false")
+                                        $("[value='Connect']").prop("disabled", false);
                                         form = null
                                     }
                                 }, "60000")
@@ -121,6 +124,9 @@
                                 $( "#console" ).empty();
                                 $( "#console" ).append('<div id="netstatus" aria-busy="false">HBN Status: Disconnected</div>');
                                 $( "#console" ).append('<div>❌ Connection to the HBN timed out! Please try again!</div>');
+                                $("[value='Connect']").attr("aria-busy", "false")
+                                $("#formsubmit").attr("aria-busy", "false")
+                                $("[value='Connect']").prop("disabled", false);
                                 client = null
                             }
                         }, "60000")
