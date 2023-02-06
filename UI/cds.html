@@ -56,6 +56,7 @@
                 
                 var formHandle = new formHandler(board, function(status){
                     if (status.message == "datasubmit"){
+                        analytics.goal('aEtq8VFrGdiiMEbA')
                         $('#subbox').empty()
                         board.formDB.allDocs({include_docs: true}).then(function(result) {
                             result.rows.forEach(function(row) {
